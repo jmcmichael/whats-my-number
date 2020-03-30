@@ -26,11 +26,11 @@ function transformHeader(header) {
     header = header
       .substring(0, header.indexOf(':')) // extract question name
       .toLowerCase() // convert to lowercase
-      .replace(/ /g,'-'); // replace spaces with dash
+      .replace(/[ \/]/g,'-'); // replace spaces with dash
   } else {
     header = header
       .toLowerCase() // convert to lowercase
-      .replace(/ /g,'-'); // replace spaces with dash
+      .replace(/[ \/]/g,'-'); // replace spaces with dash
   }
   return header;
 }
