@@ -6,8 +6,9 @@ const key = {
   target: '#key-target'
 };
 
-const data = {
-  url: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSYdCrOZoOm90TiQGq-VuvuGlw8akYOc3nixg9sKZw3Kxgc1laoM1gUCukc2s_n6pbTX0twPoaK5KuD/pub?gid=236007299&single=true&output=csv',
+const spreadsheets = {
+  data: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSYdCrOZoOm90TiQGq-VuvuGlw8akYOc3nixg9sKZw3Kxgc1laoM1gUCukc2s_n6pbTX0twPoaK5KuD/pub?gid=236007299&single=true&output=csv',
+  styles: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRos1bxqN2BiT9eP5hYt7WbwykE78fcxNqNh5MtC3uL7RV91pfDFq5XjvhlA0TqRg9DtwOBoi9Fz49l/pub?output=csv'
 };
 
 const report = {
@@ -18,6 +19,6 @@ const report = {
 export default {
   viz: viz,
   key: key,
-  data: data,
+  spreadsheets: spreadsheets,
   report: report
 };

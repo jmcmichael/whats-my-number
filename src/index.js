@@ -24,12 +24,12 @@ $(document).ready(() => {
     }
   };
 
-  gdoc.get(config.data.url) // fetch data from google spreadsheet
+  gdoc.get(config.spreadsheets) // fetch data from google spreadsheet
     .then(transform.execute) // transform column values for use in visualization
     .then(validate.execute) // validate records, drop any w/ errors & create report
     .then((data) => { // generate visualization, key, and validation report
       visualization.generate(data, targets);
-      key.generate(data, targets);
-      report.generate(data, targets);
+      // key.generate(data, targets);
+      // report.generate(data, targets);
     });
 });

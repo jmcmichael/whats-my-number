@@ -2,8 +2,8 @@ import fetch from 'node-fetch';
 import papa from 'papaparse';
 
 // returns poll data as array of json objects
-function get(url) {
-  return fetch(url)
+function get(spreadsheets) {
+  return fetch(spreadsheets.data)
     .then(response => response.text())
 	  .then(csv => parse(csv))
     .then(parsed => toJson(parsed));
