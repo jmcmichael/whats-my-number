@@ -8,28 +8,18 @@ import 'bootstrap';
 // app modules
 import config from './modules/config';
 import gdoc from './modules/gdoc';
-import transform from './modules/transform';
 import validate from './modules/validate';
 import visualization from './modules/visualization';
 import key from './modules/key';
 import report from './modules/report';
 
 $(document).ready(() => {
-  const targets = {
-    visualization: '#visualization-target',
-    key: '#key-target',
-    report: {
-      validation: '#report-validation-target',
-      datatable: '#report-datatable-target'
-    }
-  };
 
-  gdoc.get(config.spreadsheets) // fetch data from google spreadsheet
-    .then(transform.execute) // transform column values for use in visualization
+  gdoc.get(config.spreadsheets, config.cols) // fetch data from google spreadsheet
     .then(validate.execute) // validate records, drop any w/ errors & create report
     .then((data) => { // generate visualization, key, and validation report
-      visualization.generate(data, targets);
-      // key.generate(data, targets);
-      // report.generate(data, targets);
+      visualization.generate(data, config.viz);
+      // key.generate(data, config.key);
+      // report.generate(data, config.report);
     });
 });

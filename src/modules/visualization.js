@@ -1,7 +1,7 @@
 // VISUALIZATION
-function generate(data, targets) {
+function generate(data, config) {
   console.log(targets);
-  if($(targets.visualization).length) {
+  if($(config.target).length) {
     console.log('--- found visualization target');
   } else {
     console.error('--- could not find visualization target');
