@@ -3,7 +3,7 @@ function execute(data) {
   return {
     final: data,
     original: data,
-    validation: 'not ready yet'
+    validation: 'this is just a stub until validation is set up'
   };
 }
 
