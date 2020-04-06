@@ -15,6 +15,8 @@ import key from './modules/key';
 import report from './modules/report';
 
 $(document).ready(() => {
+  $('#reload').click(() => fetchAndGenerate());
+  $('#download').click(() => download());
   fetchAndGenerate();
 });
 
@@ -27,4 +29,8 @@ function fetchAndGenerate() {
       // key.generate(data, config.key);
       // report.generate(data, config.report);
     });
+}
+
+function download() {
+  console.log('download called.');
 }

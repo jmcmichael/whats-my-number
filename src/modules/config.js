@@ -1,5 +1,13 @@
 const viz = {
-  target: '#visualization-target'
+  target: '#visualization-target',
+  dimensions: {
+    // panel dimensions in inches
+    panel_x: 53,
+    panel_y: 43,
+    // panel count, horizontal (length, x), vertical (tube circumference, y)
+    total_panels_x: 11,
+    total_pabels_y: 6
+  }
 };
 
 const key = {

@@ -48,7 +48,7 @@ function getVector(v) {
 
 // put data for sub-stacks into their own arrays on original object
 function assemble(data) {
-  console.log(data.final);
+  return data;
 }
 
 export default {
