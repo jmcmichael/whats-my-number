@@ -28,6 +28,7 @@
   "dependencies": {
     "bootstrap": "4",
     "d3": "^5.15.0",
+    "d3-save-svg": "^0.0.2",
     "datatables.net": "^1.10.20",
     "datatables.net-bs4": "^1.10.20",
     "expose-loader": "^0.7.5",

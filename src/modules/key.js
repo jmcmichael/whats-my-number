@@ -1,6 +1,5 @@
 // KEY
 function generate(data, targets) {
-  console.log(targets);
   if($(targets.key).length) {
     console.log('--- found key target');
   } else {

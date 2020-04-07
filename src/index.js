@@ -1,4 +1,5 @@
 require('./styles/index.scss');
+let saveSVG =require('d3-save-svg');
 
 // vendor modules
 import PopperJs from 'popper.js';
@@ -17,15 +18,23 @@ import report from './modules/report';
 $(document).ready(() => {
   $('#reload').click(() => fetchAndGenerate());
   $('#download').click(() => download());
-  fetchAndGenerate();
+  $('#xscale').on('change', function() {
+    let constant = $('#log-constant');
+    let options = {
+      scale: this.value,
+      constant: Number(constant.val())
+    };
+    fetchAndGenerate(options);
+  });
+  fetchAndGenerate({scale: 'linear'});
 });
 
-function fetchAndGenerate() {
+function fetchAndGenerate(options) {
   gdoc.get(config.spreadsheets, config.cols) // fetch data from google spreadsheet
     .then(validate.execute) // validate records, drop any w/ errors & create report
     .then(transform.execute)
     .then((data) => { // generate visualization, key, and validation report
-      visualization.generate(data, config.viz);
+      visualization.generate(data, config.viz, options);
       // key.generate(data, config.key);
       // report.generate(data, config.report);
     });
@@ -33,4 +42,12 @@ function fetchAndGenerate() {
 
 function download() {
   console.log('download called.');
+  var date = new Date(); // Or the date you'd like converted.
+  var timeStamp = new Date(date.getTime() - (date.getTimezoneOffset() * 60000))
+      .toISOString()
+      .split('.')[0]+"Z";
+  timeStamp.replace(/:/g, '_');
+  saveSVG.save($('#visualization')[0], {
+    filename: 'whats-my-number_' + timeStamp
+  });
 }

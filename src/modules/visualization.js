@@ -4,8 +4,10 @@
 import * as d3 from 'd3';
 import times from 'lodash/times';
 
-function generate(data, config) {
-  if(!$(config.target).length) { return; } // quit if target div not found
+function generate(data, config, options) {
+  // quit if target div not found
+  if(!$(config.target).length) { console.error(config.target + ' not found!'); return; }
+
   const surveys = data.final;
 
   // calculate dimensions
@@ -17,11 +19,13 @@ function generate(data, config) {
   const width = panelsX * panelX;
   const height = panelsY * panelY;
 
+  // determine if svg already exists (as when data is reloaded)
   let svg = d3.select(config.target +  ' > svg');
-
   if (svg.empty()) {
     // set up SVG container
-    svg = d3.select(config.target).append("svg")
+    svg = d3.select(config.target).append('svg')
+      .attr('id', 'visualization')
+      .attr('style', 'background-color: white')
       .attr('preserveAspectRatio', 'xMinYMin meet')
       .attr('viewBox', '0 0 ' + width + ' ' + height);
   }
@@ -29,9 +33,19 @@ function generate(data, config) {
   // ranges for survey bars
   let survey_y = d3.scaleBand()
       .range([height, 0]);
+  // let survey_x;
+  // if(options.scale === 'linear') {
+  //   survey_x = d3.scaleLinear()
+  //       .range([0, width]);
+  // } else if (options.scale === 'symlog') {
+  //   survey_x = d3.scaleSymlog()
+  //       .range([0, width])
+  //       .constant(options.constant);
+  // }
 
-  let survey_x = d3.scaleLinear()
-      .range([0, width]);
+  let survey_x = d3.scaleSymlog()
+      .range([0, width])
+      .constant(0.1);
 
   // scale the range of the data in the domains
   survey_x.domain([0, d3.max(surveys, (d) => d.your_number)]);
@@ -51,14 +65,6 @@ function generate(data, config) {
 
   // create grid to show panel boundaries
   const gridData = generateGridData(config.dimensions);
-  console.log(gridData);
-  // ranges for grid
-  let grid_y = d3.scaleLinear()
-      .range([height, 0])
-      .domain();
-
-  let grid_x = d3.scaleLinear()
-      .range([0, width]);
 
   let grid = svg.append('g')
       .attr('id', 'grid');

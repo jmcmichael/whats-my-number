@@ -1,5 +1,4 @@
 function execute(data) {
-  console.log(data);
   return {
     final: data,
     original: data,
