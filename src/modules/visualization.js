@@ -2,6 +2,7 @@
 // based on https://bl.ocks.org/Andrew-Reid/0aedd5f3fb8b099e3e10690bd38bd458
 
 import * as d3 from 'd3';
+import times from 'lodash/times';
 
 function generate(data, config) {
   if(!$(config.target).length) { return; } // quit if target div not found
@@ -22,12 +23,6 @@ function generate(data, config) {
       .attr('preserveAspectRatio', 'xMinYMin meet')
       .attr('viewBox', '0 0 ' + width + ' ' + height);
 
-  // draw rectangle for testing
-  // svg.append('rect')
-  //   .attr('width', '100%')
-  //   .attr('height', '100%')
-  //   .attr('style', 'fill:aliceblue');
-
   // ranges for survey bars
   let survey_y = d3.scaleBand()
       .range([height, 0]);
@@ -47,7 +42,48 @@ function generate(data, config) {
     .attr('width', (d) => survey_x(d.your_number))
     .attr('y', (d) => survey_y(d.index))
     .attr('height', survey_y.bandwidth())
+    .attr('fill', d3.color('silver'))
     .attr('id', (d) => 'survey' + d.index);
+
+  // create grid to show panel boundaries
+  const gridData = generateGridData(config.dimensions);
+  console.log(gridData);
+}
+
+function generateGridData(dimensions) {
+  let data = new Array();
+  const rows = dimensions.total_panels_x;
+  const cols = dimensions.total_panels_y;
+  const paneWidth = dimensions.panel_x;
+  const paneHeight = dimensions.panel_y;
+
+  let xpos = 0;
+  let ypos = 0;
+
+  // iterate for rows
+  for (var row = 0; row < rows; row++) {
+    data[row] = new Array();
+
+    // iterate for cells/columns inside rows
+    for (var column = 0; column < cols; column++) {
+      data[row].push({
+        label: 'R' + row + 'C' + column,
+        x: xpos,
+        y: ypos,
+        width: paneWidth,
+        height: paneHeight
+      });
+      // add x position
+      xpos += paneWidth;
+    }
+
+    // reset the x position after a row is complete
+    xpos = 0;
+
+    // add y position
+    ypos += paneHeight;
+  }
+  return data;
 }
 
 export default {

@@ -19,7 +19,7 @@ const spreadsheets = {
   styles: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRos1bxqN2BiT9eP5hYt7WbwykE78fcxNqNh5MtC3uL7RV91pfDFq5XjvhlA0TqRg9DtwOBoi9Fz49l/pub?output=csv'
 };
 
-// columns required for the vizuation (others will be omitted during import)
+// columns required for the vizuation (others will be omitted during transform)
 const cols = [
   'additional_categories',
   'age',
