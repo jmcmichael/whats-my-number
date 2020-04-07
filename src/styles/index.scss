@@ -5,11 +5,19 @@
     font-size: 1rem;
     margin: 0;
     padding: 0;
+
     .logo-text {
       display: inline-block;
     }
+
     img {
       vertical-align: middle;
     }
   }
+}
+
+.visualization {
+  border: 1px solid green;
+  min-height: 500px;
+  width: 100%;
 }

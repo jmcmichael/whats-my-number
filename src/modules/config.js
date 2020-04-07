@@ -6,7 +6,7 @@ const viz = {
     panel_y: 43,
     // panel count, horizontal (length, x), vertical (tube circumference, y)
     total_panels_x: 11,
-    total_pabels_y: 6
+    total_panels_y: 10
   }
 };
 
@@ -21,31 +21,35 @@ const spreadsheets = {
 
 // columns required for the vizuation (others will be omitted during import)
 const cols = [
-  'survey_number',
-  'your_number',
-  'usage_average',
-  'usage_percentage',
-  'most_used',
-  'social_networking',
-  'entertainment_7',
-  'reading_and_reference_7',
-  'other_7',
-  'productivity_7',
-  'creativity_7',
-  'health_and_fitness_7',
-  'education_7',
-  'games_7',
   'additional_categories',
-  'pickups',
+  'age',
+  'creativity_7',
+  'education_7',
+  'emotion',
+  'entertainment_7',
+  'games_7',
+  'gender',
+  'health_and_fitness_7',
+  'initials',
+  'most_used',
+  'most_used_1',
+  'most_used_2',
+  'most_used_3',
+  'most_used_4',
+  'notifications',
+  'other_7',
   'pickup_average',
   'pickup_percentage',
-  'notifications',
+  'pickups',
+  'productivity_7',
+  'reading_and_reference_7',
+  'social_networking',
+  'survey_number',
+  'usage_average',
+  'usage_percentage',
   'usage_type',
-  'emotion',
-  'gender',
-  'age',
+  'your_number',
   'zip',
-  'initials',
 ];
 
 const report = {

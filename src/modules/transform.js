@@ -19,6 +19,7 @@ function convert(data) {
     d.health_and_fitness_7 = Number(d.health_and_fitness_7);
     d.initials = d.initials.toUpperCase();
     d.most_used = d.most_used.split(',').map(app => capitalize(app.trim()));
+    d.most_used_category = [d.most_used_1, d.most_used_2, d.most_used_3, d.most_used_4];
     d.notifications = Number(d.notifications);
     d.other_7 = Number(d.other_7);
     d.pickup_average = getVector(d.pickup_average);
@@ -32,7 +33,6 @@ function convert(data) {
     d.usage_percentage = Number(d.usage_percentage);
     d.usage_type = d.usage_type.toLowerCase();
     d.your_number = Number(d.your_number);
-    d.zip = d.zip;
     return d;
   });
   return data;
