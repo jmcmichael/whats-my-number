@@ -28,7 +28,7 @@ function generate(data, config) {
   //   .attr('height', '100%')
   //   .attr('style', 'fill:aliceblue');
 
-  // range for survey bars
+  // ranges for survey bars
   let survey_y = d3.scaleBand()
       .range([height, 0]);
 
@@ -36,17 +36,18 @@ function generate(data, config) {
       .range([0, width]);
 
   // scale the range of the data in the domains
-  survey_x .domain([0, d3.max(surveys, (d) => d.your_number)]);
-  survey_y.domain(surveys.map((d) => d.survey_number));
+  survey_x.domain([0, d3.max(surveys, (d) => d.your_number)]);
+  survey_y.domain(surveys.map((d) => d.index));
 
   // append the rectangles for the bar chart
   svg.selectAll('.survey')
     .data(surveys)
     .enter().append('rect')
     .attr('class', 'survey')
-    .attr('width', (d) => d.your_number)
-    .attr('y', (d) => d.survey_number)
-    .attr('height', survey_y.bandwidth());
+    .attr('width', (d) => survey_x(d.your_number))
+    .attr('y', (d) => survey_y(d.index))
+    .attr('height', survey_y.bandwidth())
+    .attr('id', (d) => 'survey' + d.index);
 }
 
 export default {

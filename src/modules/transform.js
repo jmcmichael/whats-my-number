@@ -8,7 +8,8 @@ function execute(data) {
 // convert string lists to arrays
 // coerce number fields from String to Number
 function convert(data) {
-  data.final = data.final.map((d) => {
+  data.final = data.final.map((d, i) => {
+    d.index = i;
     d.additional_categories = Number(d.additional_categories);
     d.creativity_7 = Number(d.creativity_7);
     d.education_7 = Number(d.education_7);
