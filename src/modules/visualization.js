@@ -5,7 +5,7 @@ import * as d3 from 'd3';
 
 function generate(data, config) {
   if(!$(config.target).length) { return; } // quit if target div not found
-  const pollData = data.final;
+  const surveys = data.final;
 
   // calculate dimensions
   const panelX = config.dimensions.panel_x;
@@ -28,12 +28,25 @@ function generate(data, config) {
   //   .attr('height', '100%')
   //   .attr('style', 'fill:aliceblue');
 
-  // range for container bars
-  let container_y = d3.scaleBand()
+  // range for survey bars
+  let survey_y = d3.scaleBand()
       .range([height, 0]);
 
-  let container_x = d3.scaleLinear()
+  let survey_x = d3.scaleLinear()
       .range([0, width]);
+
+  // scale the range of the data in the domains
+  survey_x .domain([0, d3.max(surveys, (d) => d.your_number)]);
+  survey_y.domain(surveys.map((d) => d.survey_number));
+
+  // append the rectangles for the bar chart
+  svg.selectAll('.survey')
+    .data(surveys)
+    .enter().append('rect')
+    .attr('class', 'survey')
+    .attr('width', (d) => d.your_number)
+    .attr('y', (d) => d.survey_number)
+    .attr('height', survey_y.bandwidth());
 }
 
 export default {
