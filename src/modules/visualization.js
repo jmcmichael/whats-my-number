@@ -17,11 +17,14 @@ function generate(data, config) {
   const width = panelsX * panelX;
   const height = panelsY * panelY;
 
-  // set up SVG container
-  let svg = d3.select(config.target)
-      .append('svg')
+  let svg = d3.select(config.target +  ' > svg');
+
+  if (svg.empty()) {
+    // set up SVG container
+    svg = d3.select(config.target).append("svg")
       .attr('preserveAspectRatio', 'xMinYMin meet')
       .attr('viewBox', '0 0 ' + width + ' ' + height);
+  }
 
   // ranges for survey bars
   let survey_y = d3.scaleBand()
@@ -42,12 +45,47 @@ function generate(data, config) {
     .attr('width', (d) => survey_x(d.your_number))
     .attr('y', (d) => survey_y(d.index))
     .attr('height', survey_y.bandwidth())
-    .attr('fill', d3.color('silver'))
-    .attr('id', (d) => 'survey' + d.index);
+    .attr('fill', d3.color('lightsteelblue'))
+    .attr('id', (d) => 'survey' + d.index)
+    .exit().remove();
 
   // create grid to show panel boundaries
   const gridData = generateGridData(config.dimensions);
   console.log(gridData);
+  // ranges for grid
+  let grid_y = d3.scaleLinear()
+      .range([height, 0])
+      .domain();
+
+  let grid_x = d3.scaleLinear()
+      .range([0, width]);
+
+  let grid = svg.append('g')
+      .attr('id', 'grid');
+
+  // log rect width/height
+  // gridData.map((d) => {
+  //   let dt = {
+  //     label: d.label,
+  //     x: (d) => grid_x(d.x),
+  //     y: (d) => grid_y(d.y),
+  //     width: (d) => grid_x(d.width),
+  //     height: (d) => grid_y(d.height)
+  //   };
+  //   console.log(dt);
+  // });
+
+  grid.selectAll('.panel')
+    .data(gridData)
+    .enter().append('rect')
+    .attr('id', (d) => d.label)
+    .attr('x', (d) => d.x)
+    .attr('y', (d) => d.y)
+    .attr('width', (d) => d.width)
+    .attr('height', (d) => d.height)
+    .attr('stroke', d3.color('mediumslateblue'))
+    .attr('stroke-width', 0.15)
+    .attr('fill', 'none');
 }
 
 function generateGridData(dimensions) {
@@ -61,12 +99,10 @@ function generateGridData(dimensions) {
   let ypos = 0;
 
   // iterate for rows
-  for (var row = 0; row < rows; row++) {
-    data[row] = new Array();
-
+  for (var row = 0; row <= rows; row++) {
     // iterate for cells/columns inside rows
-    for (var column = 0; column < cols; column++) {
-      data[row].push({
+    for (var column = 0; column <= cols; column++) {
+      data.push({
         label: 'R' + row + 'C' + column,
         x: xpos,
         y: ypos,
