@@ -43,6 +43,9 @@ function generate(data, config, options) {
   //       .constant(options.constant);
   // }
 
+  // let survey_x = d3.scaleLinear()
+  //       .range([0, width]);
+
   let survey_x = d3.scaleSymlog()
       .range([0, width])
       .constant(0.1);
@@ -51,8 +54,15 @@ function generate(data, config, options) {
   survey_x.domain([0, d3.max(surveys, (d) => d.your_number)]);
   survey_y.domain(surveys.map((d) => d.index));
 
+  // determine if chart group exists
+  let chart = d3.select(config.target + ' > #chart');
+  if(chart.empty()) {
+    chart = svg.append('g')
+      .attr('id', 'chart');
+  }
+
   // append the rectangles for the bar chart
-  svg.selectAll('.survey')
+  chart.selectAll('.survey')
     .data(surveys)
     .enter().append('rect')
     .attr('class', 'survey')
@@ -69,18 +79,6 @@ function generate(data, config, options) {
   let grid = svg.append('g')
       .attr('id', 'grid');
 
-  // log rect width/height
-  // gridData.map((d) => {
-  //   let dt = {
-  //     label: d.label,
-  //     x: (d) => grid_x(d.x),
-  //     y: (d) => grid_y(d.y),
-  //     width: (d) => grid_x(d.width),
-  //     height: (d) => grid_y(d.height)
-  //   };
-  //   console.log(dt);
-  // });
-
   grid.selectAll('.panel')
     .data(gridData)
     .enter().append('rect')
@@ -96,8 +94,8 @@ function generate(data, config, options) {
 
 function generateGridData(dimensions) {
   let data = new Array();
-  const rows = dimensions.total_panels_x;
-  const cols = dimensions.total_panels_y;
+  const cols = dimensions.total_panels_x;
+  const rows = dimensions.total_panels_y;
   const paneWidth = dimensions.panel_x;
   const paneHeight = dimensions.panel_y;
 
@@ -105,9 +103,9 @@ function generateGridData(dimensions) {
   let ypos = 0;
 
   // iterate for rows
-  for (var row = 0; row <= rows; row++) {
+  for (var row = 1; row <= rows; row++) {
     // iterate for cells/columns inside rows
-    for (var column = 0; column <= cols; column++) {
+    for (var column = 1; column <= cols; column++) {
       data.push({
         label: 'R' + row + 'C' + column,
         x: xpos,
