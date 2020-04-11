@@ -41,8 +41,7 @@ function fetchAndGenerate(options) {
 }
 
 function download() {
-  console.log('download called.');
-  var date = new Date(); // Or the date you'd like converted.
+  var date = new Date();
   var timeStamp = new Date(date.getTime() - (date.getTimezoneOffset() * 60000))
       .toISOString()
       .split('.')[0]+"Z";

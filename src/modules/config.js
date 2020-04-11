@@ -16,7 +16,7 @@ const key = {
 
 const spreadsheets = {
   data: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSkNHpDcHxDDSG-cXE8qhIdXa8XRAVnS1sKdJEZhJPrVi02Gi4HePP2RNAE3OrlxoyNb6u44Co_0Y15/pub?gid=0&single=true&output=csv',
-  styles: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRos1bxqN2BiT9eP5hYt7WbwykE78fcxNqNh5MtC3uL7RV91pfDFq5XjvhlA0TqRg9DtwOBoi9Fz49l/pub?output=csv'
+  parameters: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRYMTxAgZWbYo2YVuxOMbzSdDTSbkwxfAnLbrCbp276ya5ngPTir_Ove05_BViA_bU2U8PA9m7lMQvY/pub?output=csv'
 };
 
 // columns required for the vizuation (others will be omitted during transform)
