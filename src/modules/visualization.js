@@ -19,8 +19,12 @@ function generate(data, config, options) {
   const width = panelsX * panelX;
   const height = panelsY * panelY;
 
-  // determine if svg already exists (as when data is reloaded)
-  let svg = d3.select(config.target +  ' > svg');
+  // determine if svg already exists (as when data is reloaded),
+  // create all layer grids
+  let svg = d3.select(config.target +  ' > svg'),
+      chart = d3.select('#chart'),
+      panels = d3.select('#panels');
+
   if (svg.empty()) {
     // set up SVG container
     svg = d3.select(config.target).append('svg')
@@ -28,6 +32,13 @@ function generate(data, config, options) {
       .attr('style', 'background-color: white')
       .attr('preserveAspectRatio', 'xMinYMin meet')
       .attr('viewBox', '0 0 ' + width + ' ' + height);
+    // group to store the survey chart
+    chart = svg.append('g')
+      .attr('id', 'chart');
+
+    // group to store the panels
+    panels = svg.append('g')
+      .attr('id', 'panels');
   }
 
   // ranges for survey bars
@@ -54,13 +65,6 @@ function generate(data, config, options) {
   survey_x.domain([0, d3.max(surveys, (d) => d.your_number)]);
   survey_y.domain(surveys.map((d) => d.index));
 
-  // determine if chart group exists
-  let chart = d3.select(config.target + ' > #chart');
-  if(chart.empty()) {
-    chart = svg.append('g')
-      .attr('id', 'chart');
-  }
-
   // append the rectangles for the bar chart
   chart.selectAll('.survey')
     .data(surveys)
@@ -74,14 +78,12 @@ function generate(data, config, options) {
     .exit().remove();
 
   // create grid to show panel boundaries
-  const gridData = generateGridData(config.dimensions);
+  const panelData = generatePanelData(config.dimensions);
 
-  let grid = svg.append('g')
-      .attr('id', 'grid');
-
-  grid.selectAll('.panel')
-    .data(gridData)
+  panels.selectAll('.panel')
+    .data(panelData)
     .enter().append('rect')
+    .attr('class', 'panel')
     .attr('id', (d) => d.label)
     .attr('x', (d) => d.x)
     .attr('y', (d) => d.y)
@@ -89,10 +91,11 @@ function generate(data, config, options) {
     .attr('height', (d) => d.height)
     .attr('stroke', d3.color('mediumslateblue'))
     .attr('stroke-width', 0.15)
-    .attr('fill', 'none');
+    .attr('fill', 'none')
+    .exit().remove();
 }
 
-function generateGridData(dimensions) {
+function generatePanelData(dimensions) {
   let data = new Array();
   const cols = dimensions.total_panels_x;
   const rows = dimensions.total_panels_y;
